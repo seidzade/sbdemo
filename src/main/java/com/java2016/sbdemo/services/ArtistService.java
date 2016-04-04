@@ -1,6 +1,7 @@
 package com.java2016.sbdemo.services;
 
 import com.java2016.sbdemo.domain.Artist;
+import com.java2016.sbdemo.exceptions.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,6 +19,8 @@ public class ArtistService {
   }
 
   public Artist getArtistById(Long id) {
-    return artistRepository.get(id);
+    Artist ret =  artistRepository.get(id);
+    if (ret==null) throw new ObjectNotFoundException("artist",id);
+    return ret;
   }
 }
