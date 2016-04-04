@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 @Controller
 @RequestMapping("/api/v1/artists")
 public class ArtistController {
@@ -24,5 +25,10 @@ public class ArtistController {
     return artistService.getArtistById(id);
   }
 
+  @RequestMapping(method = RequestMethod.GET)
+  @ResponseBody
+  public List<Artist> getArtistsByName(@RequestParam("q") String q) {
+    return artistService.getArtistsByName(q);
+  }
 
 }
