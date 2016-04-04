@@ -18,6 +18,11 @@ public class ArtistController {
     return artistService.addArtist(artist);
   }
 
+  @RequestMapping(value="{id}", method = RequestMethod.GET)
+  @ResponseBody
+  public Artist getArtistByID(@PathVariable Long id) {
+    return artistService.getArtistById(id);
+  }
 
 
 }

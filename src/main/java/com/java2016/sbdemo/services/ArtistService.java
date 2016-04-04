@@ -16,4 +16,8 @@ public class ArtistService {
     artistRepository.put(artist.getId(),artist);
     return artist;
   }
+
+  public Artist getArtistById(Long id) {
+    return artistRepository.get(id);
+  }
 }
