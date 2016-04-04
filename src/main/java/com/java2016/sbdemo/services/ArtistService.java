@@ -4,9 +4,9 @@ import com.java2016.sbdemo.dao.ArtistRepository;
 import com.java2016.sbdemo.domain.Artist;
 import com.java2016.sbdemo.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 @Service
 public class ArtistService {
@@ -24,9 +24,8 @@ public class ArtistService {
     if (ret==null) throw new ObjectNotFoundException("artist",id);
     return ret;
   }
-  public List<Artist> getArtistsByName(String q) {
-    List<Artist> ret = new ArrayList<>();
-    artistRepository.findByNameContaining(q).forEach(ret::add);
-    return ret;
+  public List<Artist> getArtistsByName(String q, int page, int pageSize) {
+    PageRequest pageRequest = new PageRequest(page,pageSize);
+    return artistRepository.findByNameContaining(q,pageRequest);
   }
 }

@@ -27,8 +27,10 @@ public class ArtistController {
 
   @RequestMapping(method = RequestMethod.GET)
   @ResponseBody
-  public List<Artist> getArtistsByName(@RequestParam("q") String q) {
-    return artistService.getArtistsByName(q);
+  public List<Artist> getArtistsByName(
+      @RequestParam("q") String q,
+      @RequestParam(value = "page",required = false, defaultValue = "0") Integer page) {
+    return artistService.getArtistsByName(q,page,5);
   }
 
 }
