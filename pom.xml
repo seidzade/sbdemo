@@ -5,7 +5,7 @@
 
 	<groupId>com.java2016.sbdemo</groupId>
 	<artifactId>art</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>development-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>art</name>
