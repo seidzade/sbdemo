@@ -48,7 +48,7 @@ else:
 
 if glob.glob(build_dir + '/' + str(release) + '*'):
     build = os.walk(build_dir).next()[1]
-    build.sort(key=lambda s: map(int, s.split('.')))
+    build.sort(key=lambda s: map(int, s.split('.'))) # <--- bug of sorting here
 
     last_build = int(''.join(build[-1]).rsplit('.', 1)[1])
     new_build = str(release) + '.' + str((last_build + 1))
