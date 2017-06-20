@@ -4,6 +4,7 @@
 import argparse
 import git
 import os
+import glob
 import subprocess
 from os.path import expanduser
 import xml.etree.ElementTree as xml
@@ -13,7 +14,6 @@ home = expanduser('~')
 git_dir = home + '/git/sbdemo'
 pom = git_dir + '/pom.xml'
 ns = '{http://maven.apache.org/POM/4.0.0}'
-build_dir = home + '/.m2/repository/com/java2016/sbdemo/art/'
 buildcmd = '/usr/bin/mvn -f ' + pom + ' install -DskipTests'
 
 xml.register_namespace('', 'http://maven.apache.org/POM/4.0.0')
@@ -22,6 +22,7 @@ xml.register_namespace('xsi', 'http://www.w3.org/2001/XMLSchema-instance')
 parser = argparse.ArgumentParser(description='Process release.')
 parser.add_argument("--release", type=StrictVersion, required=True)
 release = parser.parse_args().release
+build_dir = home + '/.m2/repository/com/java2016/sbdemo/art/'
 
 ibranch = 'release/' + str(release)
 
@@ -30,10 +31,12 @@ repo = git.Repo( git_dir )
 
 if ibranch in repo.git.branch():
     print ibranch + ' branch already exists'
+    repo.git.checkout('pom.xml')
     repo.git.checkout(ibranch)
     print 'Active branch ' + repo.active_branch.name
 else:
     print 'creating ' + ibranch
+    repo.git.checkout('pom.xml')
     repo.git.checkout('HEAD', b=ibranch)
     print 'updating pom, project version to -> ' + str(release) + '-SNAPSHOT'
     epom = xml.parse(pom)
@@ -43,7 +46,7 @@ else:
     print 'Active branch ' + repo.active_branch.name
 
 
-if os.path.exists(build_dir):
+if glob.glob(build_dir + '/' + str(release) + '*'):
     build = os.walk(build_dir).next()[1]
     build.sort(key=lambda s: map(int, s.split('.')))
 
