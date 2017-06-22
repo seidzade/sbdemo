@@ -45,7 +45,7 @@ else:
     repo.git.commit('-a', m="committing pom.xml " + str(release) + '-SNAPSHOT')
     print 'Active branch ' + repo.active_branch.name
 
-#count next or new build .. wrong solution , instead parse filesystem, need use tags info , or fetch it form some db
+#count next or new build .. wrong solution , instead parse filesystem, need use tags info , or fetch it from some db
 if glob.glob(build_dir + '/' + str(release) + '*'):
     build = os.walk(build_dir).next()[1]
     build.sort(key=lambda s: map(int, s.split('.'))) # <--- minor bug of sorting here, not real case - only when create lower than last release
